@@ -52,9 +52,38 @@ const signup = async (req, res) => {
   }
 };
 
+const getAccountDetails = async (req, res) => {
+  try {
+      const account = { _id: req.session.account._id };
+      const docs = await Account.find(account).select('username createdAt').lean().exec();
+      return res.json({ account: docs[0] });
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'An error occurred' });
+  }
+};
+
+const changePass = async (req, res) => {
+  const { pass, pass2 } = req.body;
+  if (!pass || !pass2) return res.status(400).json({ error: 'All fields required' });
+  if (pass !== pass2) return res.status(400).json({ error: 'Passwords must match' });
+
+  try {
+      const account = { _id: req.session.account._id };
+      const hash = await Account.generateHash(pass); 
+      await Account.findOneAndUpdate(account, { $set: { password: hash } }).exec();
+      return res.json({ message: 'Password updated' });
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'An error occurred' });
+  }
+};
+
 module.exports = {
   loginPage,
   login,
   logout,
   signup,
+  getAccountDetails,
+  changePass,
 };

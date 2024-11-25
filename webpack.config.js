@@ -25,4 +25,7 @@ module.exports = {
         path: path.resolve(__dirname, 'hosted'),
         filename: '[name]Bundle.js',
     },
+    resolve: {
+        extensions: ['.js', '.jsx', '.json'],
+    },      
 };

@@ -2,6 +2,7 @@ const helper = require('./helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
+import AccountDetails from './accountDetails.jsx';
 
 const handleRecipe = (e, onRecipeAdded) => {
     e.preventDefault();
@@ -113,18 +114,31 @@ const RecipeList = (props) => {
 
 const App = () => {
     const [reloadRecipes, setReloadRecipes] = useState(false);
-
+    const [showAccountDetails, setShowAccountDetails] = useState(false);
+  
     return (
-        <div>
-            <div id="makeRecipe">
-                <RecipeForm triggerReload={() => setReloadRecipes(!reloadRecipes)} />
-            </div>
-            <div id="recipes">
-                <RecipeList recipes={[]} reloadRecipes={reloadRecipes} />
-            </div>
+      <div>
+        <button onClick={() => setShowAccountDetails(!showAccountDetails)}>
+          {showAccountDetails ? 'Hide Account Details' : 'Show Account Details'}
+        </button>
+  
+        {showAccountDetails ? (
+          <div id="accountDetails">
+            <AccountDetails />
+          </div>
+        ) : (
+          <div id="makeRecipe">
+            <RecipeForm triggerReload={() => setReloadRecipes(!reloadRecipes)} />
+          </div>
+        )}
+  
+        <div id="recipes">
+          <RecipeList recipes={[]} reloadRecipes={reloadRecipes} />
         </div>
+      </div>
     );
-};
+  };
+  
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
