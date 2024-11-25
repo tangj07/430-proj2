@@ -17,7 +17,12 @@ const router = (app) => {
   app.delete('/deleteRecipe/:id', mid.requiresLogin, controllers.Recipe.deleteRecipe);
 
   // Default route
-  app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+  app.get('/', (req, res) => {
+    if (req.session && req.session.user) {
+      return res.redirect('/dashboard');
+    }
+    res.redirect('/login');
+  });  
 };
 
 module.exports = router;

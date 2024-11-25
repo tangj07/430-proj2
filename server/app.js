@@ -48,6 +48,11 @@ redisClient.connect().then(() => {
   app.engine('handlebars', expressHandlebars.engine({ defaultLayout: '' }));
   app.set('view engine', 'handlebars');
   app.set('views', `${__dirname}/../views`);
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'An unexpected error occurred.' });
+  });
+  
   router(app);
 
   app.listen(port, (err) => {

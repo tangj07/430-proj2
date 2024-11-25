@@ -47,6 +47,24 @@ nav:nth-child(1) {
     background-color: #66bdff;
 }
 
+.dashboard-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dashboard-nav button {
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.dashboard-content {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
 .domoForm {
     border: 2px solid #338acc;
     height: 35px;
