@@ -39,34 +39,37 @@ const makeRecipe = async (req, res) => {
 // Retrieve recipes
 const getRecipes = async (req, res) => {
   try {
-    const query = { owner: req.session.account._id };
-    const docs = await Recipe.find(query)
-      .select('name ingredients steps')
-      .lean()
-      .exec();
+      const docs = await Recipe.find()
+          .populate('owner', 'username')
+          .select('name ingredients steps owner')
+          .lean()
+          .exec();
 
-    return res.json({ recipes: docs });
+      return res.json({ recipes: docs, currentUser: req.session.account._id }); 
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ error: 'Error retrieving recipes!' });
+      console.log(err);
+      return res.status(500).json({ error: 'Error retrieving recipes!' });
   }
 };
 
-// Find and delete the recipe
+// Find and delete recipe
 const deleteRecipe = async (req, res) => {
   try {
-    const recipeId = req.params.id;
-    const deletedRecipe = await Recipe.findOneAndDelete({
-      _id: recipeId,
-      owner: req.session.account._id,
-    });
-    if (!deletedRecipe) {
-      return res.status(404).json({ error: 'Recipe not found or not authorized to delete' });
-    }
-    return res.status(200).json({ message: 'Recipe deleted successfully!' });
+      const recipeId = req.params.id;
+
+      const deletedRecipe = await Recipe.findOneAndDelete({
+          _id: recipeId,
+          owner: req.session.account._id,
+      });
+
+      if (!deletedRecipe) {
+          return res.status(404).json({ error: 'Recipe not found or not authorized to delete' });
+      }
+
+      return res.status(200).json({ message: 'Recipe deleted successfully!' });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ error: 'An error occurred while deleting the recipe' });
+      console.log(err);
+      return res.status(500).json({ error: 'An error occurred while deleting the recipe' });
   }
 };
 
