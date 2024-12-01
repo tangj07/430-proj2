@@ -1,6 +1,7 @@
 const models = require('../models');
 
 const { Recipe } = models;
+const { Account } = models;
 
 const recipePage = async (req, res) => res.render('app');
 
@@ -15,6 +16,7 @@ const makeRecipe = async (req, res) => {
     ingredients: req.body.ingredients.split(','), // string into an array
     steps: req.body.steps.split(','),
     owner: req.session.account._id,
+    premium: req.body.premium || false, 
   };
 
   try {
@@ -25,6 +27,7 @@ const makeRecipe = async (req, res) => {
       name: newRecipe.name,
       ingredients: newRecipe.ingredients,
       steps: newRecipe.steps,
+      premium: newRecipe.premium,
     });
   } catch (err) {
     console.log(err);
@@ -39,13 +42,20 @@ const makeRecipe = async (req, res) => {
 // Retrieve recipes
 const getRecipes = async (req, res) => {
   try {
-      const docs = await Recipe.find()
-          .populate('owner', 'username')
-          .select('name ingredients steps owner')
-          .lean()
-          .exec();
-
-      return res.json({ recipes: docs, currentUser: req.session.account._id }); 
+    const account = await Account.findById(req.session.account._id).lean();
+    const query = {};
+    if (req.session.account && !account.premium) {
+    query.premium = { $ne: true };}
+    const docs = await Recipe.find(query)
+      .populate('owner', 'username')
+      .select('name ingredients steps premium owner')
+      .lean()
+      .exec();
+    return res.json({
+      recipes: docs,
+      currentUser: req.session.account._id,
+      premium: account.premium, 
+    });
   } catch (err) {
       console.log(err);
       return res.status(500).json({ error: 'Error retrieving recipes!' });

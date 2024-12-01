@@ -4,6 +4,7 @@ const { useState, useEffect } = React;
 const RecipeList = (props) => {
     const [recipes, setRecipes] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
+    const [isPremium, setIsPremium] = useState(false);
 
     useEffect(() => {
         const loadRecipesFromServer = async () => {
@@ -11,6 +12,8 @@ const RecipeList = (props) => {
             const data = await response.json();
             setRecipes(data.recipes);
             setCurrentUser(data.currentUser);
+            setIsPremium(data.premium);
+            console.log(data.premium)
         };
         loadRecipesFromServer();
     }, [props.reloadRecipes]);
@@ -38,25 +41,31 @@ const RecipeList = (props) => {
         );
     }
 
-    const recipeNodes = recipes.map(recipe => (
-        <div key={recipe._id} className="recipe">
-            <h3 className="recipeName">Recipe: {recipe.name}</h3>
-            <p><strong>Owner:</strong> {recipe.owner?.username || 'Unknown'}</p> 
-            <p className="recipeIngredients">
-                <strong>Ingredients:</strong>
-                <ol>
-                    {recipe.ingredients.map((ingredient, index) => <li key={index}>{ingredient}</li>)}
-                </ol>
-            </p>
-            <p className="recipeSteps">
-                <strong>Steps:</strong>
-                <ol>
-                    {recipe.steps.map((step, index) => <li key={index}>{step}</li>)}
-                </ol>
-            </p>
-            {currentUser === recipe.owner?._id && ( <button onClick={() => deleteRecipe(recipe._id)}>Delete</button> )}
-        </div>
-    ));
+    const recipeNodes = recipes.map(recipe => {
+        if (recipe.premium && !isPremium) {
+            return null; 
+        }
+        return (
+            <div key={recipe._id} className="recipe">
+                <h3 className="recipeName">Recipe: {recipe.name}</h3>
+                {recipe.premium && <span className="premiumTag">Premium Recipe</span>}
+                <p><strong>Owner:</strong> {recipe.owner?.username || 'Unknown'}</p>
+                <p className="recipeIngredients">
+                    <strong>Ingredients:</strong>
+                    <ol>
+                        {recipe.ingredients.map((ingredient, index) => <li key={index}>{ingredient}</li>)}
+                    </ol>
+                </p>
+                <p className="recipeSteps">
+                    <strong>Steps:</strong>
+                    <ol>
+                        {recipe.steps.map((step, index) => <li key={index}>{step}</li>)}
+                    </ol>
+                </p>
+                {currentUser === recipe.owner?._id && ( <button onClick={() => deleteRecipe(recipe._id)}>Delete</button> )}
+            </div>
+        );
+    });
 
     return (
         <div className="recipeList">
