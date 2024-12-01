@@ -21,8 +21,8 @@ const router = (app) => {
     if (req.session && req.session.user) {
       return res.redirect('/dashboard');
     }
-    res.redirect('/login');
-  });  
+    return res.redirect('/login');
+  });
 };
 
 module.exports = router;
