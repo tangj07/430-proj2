@@ -7,9 +7,9 @@ const router = (app) => {
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
-  app.get('/getAccountUsernameType', mid.requiresLogin, controllers.Account.getAccountDetails);
+  app.get('/getAccountDetails', mid.requiresLogin, controllers.Account.getAccountDetails);
   app.post('/changePass', mid.requiresSecure, mid.requiresLogin, controllers.Account.changePass);
-
+  app.post('/updatePremiumStatus', mid.requiresSecure, mid.requiresLogin, controllers.Account.updatePremiumStatus);
   // Recipe routes
   app.get('/dashboard', mid.requiresLogin, controllers.Recipe.recipePage);
   app.post('/makeRecipe', mid.requiresLogin, controllers.Recipe.makeRecipe);

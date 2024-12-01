@@ -41,7 +41,7 @@ const RecipeList = (props) => {
     const recipeNodes = recipes.map(recipe => (
         <div key={recipe._id} className="recipe">
             <h3 className="recipeName">Recipe: {recipe.name}</h3>
-            <p><strong>Owner:</strong> {recipe.owner?.username || 'Unknown'}</p> {/* Display owner's username */}
+            <p><strong>Owner:</strong> {recipe.owner?.username || 'Unknown'}</p> 
             <p className="recipeIngredients">
                 <strong>Ingredients:</strong>
                 <ol>

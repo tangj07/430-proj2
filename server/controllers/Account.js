@@ -54,12 +54,22 @@ const signup = async (req, res) => {
 
 const getAccountDetails = async (req, res) => {
   try {
-    const account = { _id: req.session.account._id };
-    const docs = await Account.find(account).select('username createdAt').lean().exec();
-    return res.json({ account: docs[0] });
+    const account = await Account.findById(req.session.account._id).lean();
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    return res.status(200).json({
+      account: {
+        username: account.username,
+        premium: account.premium,
+      },
+      premium: account.premium,
+    });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: 'An error occurred' });
+    console.log(err);
+    return res.status(500).json({ error: 'Failed to fetch account details' });
   }
 };
 
@@ -78,6 +88,23 @@ const changePass = async (req, res) => {
     return res.status(500).json({ error: 'An error occurred' });
   }
 };
+const updatePremiumStatus = async (req, res) => {
+  try {
+    const { premium } = req.body; 
+    const accountId = req.session.account._id;
+
+    const account = await Account.findByIdAndUpdate(accountId, { premium }, { new: true }).lean();
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    return res.status(200).json({ premium: account.premium });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Failed to update premium status' });
+  }
+};
 
 module.exports = {
   loginPage,
@@ -86,4 +113,5 @@ module.exports = {
   signup,
   getAccountDetails,
   changePass,
+  updatePremiumStatus,
 };

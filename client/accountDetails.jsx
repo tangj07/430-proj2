@@ -3,19 +3,28 @@ const AccountDetails = () => {
   const [account, setAccount] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isPremium, setIsPremium] = useState(false);
   // Fetch account details 
   useEffect(() => {
     const loadAccountDetails = async () => {
-      const response = await fetch('/getAccountUsernameType');
-      const data = await response.json();
-      if (data.account) {
-        setAccount(data.account);
-      } else {
-        console.error('Error fetching account details');
+      try {
+        const response = await fetch('/getAccountDetails');
+        const data = await response.json();
+  
+        if (response.ok) {
+          setAccount({ username: data.username });
+          setIsPremium(data.premium);
+        } else {
+          console.error(data.error || 'Error fetching account details');
+        }
+      } catch (error) {
+        console.error('Error fetching account details:', error);
       }
     };
+  
     loadAccountDetails();
   }, []);
+
   // Handle password change form submission
   const handlePasswordChange = async (e) => {
     e.preventDefault();
@@ -35,6 +44,27 @@ const AccountDetails = () => {
       alert('Password successfully changed!');
     }
   };
+  const handlePremiumToggle = async () => {
+    const newStatus = !isPremium;
+
+    try {
+        const response = await fetch('/updatePremiumStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ premium: newStatus }),
+        });
+
+        if (response.ok) {
+            setIsPremium(newStatus);
+        } else {
+            console.error('Failed to update premium status');
+        }
+    } catch (error) {
+        console.error('Error updating premium status:', error);
+    }
+  };
   return (
     <div className="account">
       {account ? (
@@ -42,6 +72,10 @@ const AccountDetails = () => {
           <h3>Account Details</h3>
           <p>Username: {account.username}</p>
           <p>Date Created: {new Date(account.createdAt).toLocaleDateString()}</p>
+          <p><strong>Premium Account:</strong> {isPremium ? 'Yes' : 'No'}</p>
+          <button onClick={handlePremiumToggle}>
+              {isPremium ? 'Cancel Premium' : 'Upgrade to Premium'}
+          </button>
           <form onSubmit={handlePasswordChange}>
             <div>
               <label htmlFor="newPassword">New Password:</label>
