@@ -1,25 +1,70 @@
 ● What is the intended purpose of your application?
-
+it is to make a recipe blog where users can add, search, and delete recipes.
 ● What work has been completed for this milestone?
-
+i think i've completed basically all the mechanics and components i wanted to add. 
 ● What work is left, and how do you plan to complete it?
 ○ What does your timeline/roadmap look like to finish on time?
-
+i left to do the css for last and will work on it after this milestone. besides that and minor fixes, i think that is all that's left.
 ● How are you using React?
 ○ What components have you made?
 ○ What components do you still plan to add?
-
+besides the login, there is the recipeForm, recipeSearch, recipeList, accountDetails, and dashboard as the five components.
 ● What data are you storing in MongoDB?
 ○ What data do you still need to store?
-
+i am storing the accounts(name, password, created date, premium status) and recipes(name, ingredients, steps, owner, created date, premium status).
 ● What is your profit model?
 ○ Have you implemented it yet?
 ■ If so, how?
 ■ If not, what is your plan to implement it?
-
+it is the premium status to the user's account. if the account is premium then it will be able to see the premium recipes.
 ● Do you have a plan for going above and beyond? If so, what is it?
-
+No
 ● If you used any borrowed code or code fragments, where did you get them from?
 What do the code fragments do? Where are they in your code?
+account code is similar to domomaker.
 
 Endpoint Documentation:
+URL: /getRecipes
+Supported Methods: GET
+Middleware: Requires Login
+Query Params: None
+Body Params: None
+Description: Retrieves a list of recipes from the database, filtering out premium recipes if the current user is not a premium member. It returns the recipes along with the current user's ID and their premium status.
+Return Type(s): JSON
+
+URL: /updatePremiumStatus
+Supported Methods: POST
+Middleware: Requires Login
+Query Params: None
+Body Params:
+premium (boolean)
+Description: Updates the premium status for the logged-in user based on the data provided in the body.
+Return Type(s): JSON
+
+URL: /deleteRecipe/:id
+Supported Methods: DELETE
+Middleware: Requires Login, Requires Recipe Ownership
+Query Params: None
+Body Params: None
+Description: Deletes a recipe from the database by its unique identifier. This can only be done by the user who created the recipe.
+Return Type(s): JSON
+
+URL: /login
+Supported Methods: POST
+Middleware: None
+Query Params: None
+Body Params:
+username (string)
+password (string)
+Description: Authenticates the user by checking their username and password against the database. If successful, the user’s session is created and the user is logged in.
+Return Type(s): JSON
+
+URL: /signup
+Supported Methods: POST
+Middleware: None
+Query Params: None
+Body Params:
+username (string) 
+password (string)
+Description: Registers a new user by creating a new account with the provided username and password. The user will be logged in after signing up.
+Return Type(s): JSON
