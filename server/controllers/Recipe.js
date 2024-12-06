@@ -16,7 +16,7 @@ const makeRecipe = async (req, res) => {
     ingredients: req.body.ingredients.split(','), // string into an array
     steps: req.body.steps.split(','),
     owner: req.session.account._id,
-    premium: req.body.premium || false, 
+    premium: req.body.premium || false,
   };
 
   try {
@@ -45,7 +45,8 @@ const getRecipes = async (req, res) => {
     const account = await Account.findById(req.session.account._id).lean();
     const query = {};
     if (req.session.account && !account.premium) {
-    query.premium = { $ne: true };}
+      query.premium = { $ne: true };
+    }
     const docs = await Recipe.find(query)
       .populate('owner', 'username')
       .select('name ingredients steps premium owner')
@@ -54,32 +55,32 @@ const getRecipes = async (req, res) => {
     return res.json({
       recipes: docs,
       currentUser: req.session.account._id,
-      premium: account.premium, 
+      premium: account.premium,
     });
   } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: 'Error retrieving recipes!' });
+    console.log(err);
+    return res.status(500).json({ error: 'Error retrieving recipes!' });
   }
 };
 
 // Find and delete recipe
 const deleteRecipe = async (req, res) => {
   try {
-      const recipeId = req.params.id;
+    const recipeId = req.params.id;
 
-      const deletedRecipe = await Recipe.findOneAndDelete({
-          _id: recipeId,
-          owner: req.session.account._id,
-      });
+    const deletedRecipe = await Recipe.findOneAndDelete({
+      _id: recipeId,
+      owner: req.session.account._id,
+    });
 
-      if (!deletedRecipe) {
-          return res.status(404).json({ error: 'Recipe not found or not authorized to delete' });
-      }
+    if (!deletedRecipe) {
+      return res.status(404).json({ error: 'Recipe not found or not authorized to delete' });
+    }
 
-      return res.status(200).json({ message: 'Recipe deleted successfully!' });
+    return res.status(200).json({ message: 'Recipe deleted successfully!' });
   } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: 'An error occurred while deleting the recipe' });
+    console.log(err);
+    return res.status(500).json({ error: 'An error occurred while deleting the recipe' });
   }
 };
 

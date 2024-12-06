@@ -21,23 +21,52 @@ const handleRecipe = (e, onRecipeAdded) => {
 
 const RecipeForm = (props) => {
     return (
-        <form id="recipeForm"
+        <form
+            id="recipeForm"
             onSubmit={(e) => handleRecipe(e, props.triggerReload)}
             name="recipeForm"
             action="/makeRecipe"
             method="POST"
-            className="recipeForm"
+            className="recipe-form"
         >
-            <label htmlFor="name">Recipe Name: </label>
-            <input id="recipeName" type="text" name="name" placeholder="Recipe Name" />
+            <div className="form-group">
+                <label htmlFor="name">Recipe Name:</label>
+                <input
+                    id="recipeName"
+                    type="text"
+                    name="name"
+                    placeholder="Recipe Name"
+                    className="form-input"
+                />
+            </div>
 
-            <label htmlFor="ingredients">Ingredients (comma-separated): </label>
-            <textarea id="recipeIngredients" name="ingredients" placeholder="e.g., flour, sugar, eggs" rows="3"></textarea>
+            <div className="form-group">
+                <label htmlFor="ingredients">Ingredients (comma-separated):</label>
+                <textarea
+                    id="recipeIngredients"
+                    name="ingredients"
+                    placeholder="e.g., flour, sugar, eggs"
+                    rows="3"
+                    className="form-textarea"
+                ></textarea>
+            </div>
 
-            <label htmlFor="steps">Steps (comma-separated): </label>
-            <textarea id="recipeSteps" name="steps" placeholder="e.g., Mix ingredients, Bake for 20 minutes" rows="5"></textarea>
+            <div className="form-group">
+                <label htmlFor="steps">Steps (comma-separated):</label>
+                <textarea
+                    id="recipeSteps"
+                    name="steps"
+                    placeholder="e.g., Mix ingredients, Bake for 20 minutes"
+                    rows="5"
+                    className="form-textarea"
+                ></textarea>
+            </div>
 
-            <input className="makeRecipeSubmit" type="submit" value="Add Recipe" />
+            <input
+                className="btn btn-submit"
+                type="submit"
+                value="Add Recipe"
+            />
         </form>
     );
 };

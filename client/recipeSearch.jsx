@@ -42,26 +42,27 @@ const RecipeSearch = ({ onSearchResults }) => {
     };
 
     return (
-        <div>
+        <div className="recipe-search">
             <h2>Search Recipes</h2>
-            <form onSubmit={handleSearch}>
+            <form onSubmit={handleSearch} className="search-form">
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search by recipe name"
+                    className="search-input"
                 />
-                <button type="submit">Search</button>
+                <button type="submit" className="btn btn-search">Search</button>
             </form>
-            <div>
+            <div className="search-results">
                 {submitted && filteredRecipes.length === 0 ? (
                     <p>No recipes found.</p>
                 ) : (
                     submitted &&
                     filteredRecipes.map((recipe, index) => (
-                        <div key={index}>
-                            <h3 className="recipeName">Recipe: {recipe.name}</h3>
-                            <p className="recipeIngredients">
+                        <div key={index} className="recipe-card">
+                            <h3 className="recipe-name">{recipe.name}</h3>
+                            <p className="recipe-ingredients">
                                 <strong>Ingredients:</strong>
                                 <ol>
                                     {recipe.ingredients.map((ingredient, index) => (
@@ -69,7 +70,7 @@ const RecipeSearch = ({ onSearchResults }) => {
                                     ))}
                                 </ol>
                             </p>
-                            <p className="recipeSteps">
+                            <p className="recipe-steps">
                                 <strong>Steps:</strong>
                                 <ol>
                                     {recipe.steps.map((step, index) => (
@@ -82,7 +83,7 @@ const RecipeSearch = ({ onSearchResults }) => {
                 )}
             </div>
         </div>
-    );
+    );    
 };
 
 export default RecipeSearch;

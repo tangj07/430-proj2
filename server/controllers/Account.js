@@ -88,7 +88,7 @@ const changePass = async (req, res) => {
 };
 const updatePremiumStatus = async (req, res) => {
   try {
-    const { premium } = req.body; 
+    const { premium } = req.body;
     const accountId = req.session.account._id;
 
     const account = await Account.findByIdAndUpdate(accountId, { premium }, { new: true }).lean();

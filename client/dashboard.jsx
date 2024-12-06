@@ -29,17 +29,17 @@ const Dashboard = () => {
     return (
         <div>
             <div className="dashboard-nav">
-                <button onClick={() => setActiveComponent('recipeForm')}>Add Recipe</button>
-                <button onClick={() => setActiveComponent('recipeList')}>View Recipes</button>
-                <button onClick={() => setActiveComponent('recipeSearch')}>Search Recipes</button>
-                <button onClick={() => setActiveComponent('accountDetails')}>Account Details</button>
+                <button className="btn btn-nav" onClick={() => setActiveComponent('recipeForm')}>Add Recipe</button>
+                <button className="btn btn-nav" onClick={() => setActiveComponent('recipeList')}>View Recipes</button>
+                <button className="btn btn-nav" onClick={() => setActiveComponent('recipeSearch')}>Search Recipes</button>
+                <button className="btn btn-nav" onClick={() => setActiveComponent('accountDetails')}>Account Details</button>
             </div>
-
+    
             <div className="dashboard-content">
                 {renderActiveComponent()}
             </div>
         </div>
-    );
+    );    
 };
 
 const init = () => {

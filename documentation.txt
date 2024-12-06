@@ -68,3 +68,9 @@ username (string)
 password (string)
 Description: Registers a new user by creating a new account with the provided username and password. The user will be logged in after signing up.
 Return Type(s): JSON
+
+
+img credits:
+duck: https://www.cleanpng.com/png-duck-bird-long-bill-webbed-feet-walking-brown-duck-7847450/download-png.html
+favicon: https://icons8.com/icon/set/favicon-food/group-decorative
+pasta: https://pngtree.com/freepng/pasta-isolated-on-white-background_16312780.html

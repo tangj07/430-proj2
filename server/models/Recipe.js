@@ -29,7 +29,7 @@ const RecipeSchema = new mongoose.Schema({
   },
   premium: {
     type: Boolean,
-    default: false,  
+    default: false,
   },
 });
 

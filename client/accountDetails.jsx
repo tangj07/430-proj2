@@ -67,45 +67,47 @@ const AccountDetails = () => {
     }
   };
   return (
-    <div className="account">
-      {account ? (
-        <>
-          <h3>Account Details</h3>
-          <p>Username: {account.username}</p>
-          <p>Date Created: {new Date(account.createdDate).toLocaleDateString()}</p>
-          <p><strong>Premium Account:</strong> {isPremium ? 'Yes' : 'No'}</p>
-          <button onClick={handlePremiumToggle}>
-              {isPremium ? 'Cancel Premium' : 'Upgrade to Premium'}
-          </button>
-          <form onSubmit={handlePasswordChange}>
-            <div>
-              <label htmlFor="newPassword">New Password:</label>
-              <input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="New Password"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="confirmPassword">Confirm New Password:</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm New Password"
-                required
-              />
-            </div>
-            <button type="submit">Change Password</button>
-          </form>
-        </>
-      ) : (
-        <p>Loading account details...</p>
-      )}
+    <div className="account-details">
+        {account ? (
+            <>
+                <h3>Account Details</h3>
+                <p><strong>Username:</strong> {account.username}</p>
+                <p><strong>Date Created:</strong> {new Date(account.createdDate).toLocaleDateString()}</p>
+                <p><strong>Premium Account:</strong> {isPremium ? 'Yes' : 'No'}</p>
+                <button className="btn btn-premium" onClick={handlePremiumToggle}>
+                    {isPremium ? 'Cancel Premium' : 'Upgrade to Premium'}
+                </button><br></br>
+                <form onSubmit={handlePasswordChange} className="password-form">
+                    <div className="form-group">
+                        <label htmlFor="newPassword">New Password:</label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            placeholder="New Password"
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">Confirm New Password:</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="Confirm New Password"
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-submit">Change Password</button>
+                </form>
+            </>
+        ) : (
+            <p>Loading account details...</p>
+        )}
     </div>
   );
 };
