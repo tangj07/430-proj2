@@ -12,7 +12,8 @@ const AccountDetails = () => {
         const data = await response.json();
   
         if (response.ok) {
-          setAccount({ username: data.username });
+          setAccount({ username: data.username,
+          createdDate: data.createdDate, });
           setIsPremium(data.premium);
         } else {
           console.error(data.error || 'Error fetching account details');
@@ -71,7 +72,7 @@ const AccountDetails = () => {
         <>
           <h3>Account Details</h3>
           <p>Username: {account.username}</p>
-          <p>Date Created: {new Date(account.createdAt).toLocaleDateString()}</p>
+          <p>Date Created: {new Date(account.createdDate).toLocaleDateString()}</p>
           <p><strong>Premium Account:</strong> {isPremium ? 'Yes' : 'No'}</p>
           <button onClick={handlePremiumToggle}>
               {isPremium ? 'Cancel Premium' : 'Upgrade to Premium'}

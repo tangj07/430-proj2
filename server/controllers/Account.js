@@ -61,11 +61,9 @@ const getAccountDetails = async (req, res) => {
     }
 
     return res.status(200).json({
-      account: {
-        username: account.username,
-        premium: account.premium,
-      },
+      username: account.username,
       premium: account.premium,
+      createdDate: account.createdDate,
     });
   } catch (err) {
     console.log(err);
