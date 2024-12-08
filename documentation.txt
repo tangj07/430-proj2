@@ -1,23 +1,20 @@
-● What is the intended purpose of your application?
+● What is the purpose of your application? What does it do?
 it is to make a recipe blog where users can add, search, and delete recipes.
-● What work has been completed for this milestone?
-i think i've completed basically all the mechanics and components i wanted to add. 
-● What work is left, and how do you plan to complete it?
-○ What does your timeline/roadmap look like to finish on time?
-i left to do the css for last and will work on it after this milestone. besides that and minor fixes, i think that is all that's left.
 ● How are you using React?
-○ What components have you made?
-○ What components do you still plan to add?
+It is to build the front-end as it handles dynamic updates, renders components, and manages state.
+○ What components do you have?
 besides the login, there is the recipeForm, recipeSearch, recipeList, accountDetails, and dashboard as the five components.
 ● What data are you storing in MongoDB?
-○ What data do you still need to store?
 i am storing the accounts(name, password, created date, premium status) and recipes(name, ingredients, steps, owner, created date, premium status).
-● What is your profit model?
-○ Have you implemented it yet?
-■ If so, how?
-■ If not, what is your plan to implement it?
-it is the premium status to the user's account. if the account is premium then it will be able to see the premium recipes.
-● Do you have a plan for going above and beyond? If so, what is it?
+● What went right in the development of this project?
+Components were reusable. State management worked well. 
+● What went wrong in the development of this project?
+Debugging was time-consuming. Fetching data had issues.
+● What did you learn while developing this project?
+I learned React hooks and component design. I improved my back-end integration skills. Debugging and error handling became easier.
+● If you were to continue, what would you do to improve your application?
+I would add recipe favorites, search filters, and images to recipes. 
+● If you went above and beyond, how did you do so?
 No
 ● If you used any borrowed code or code fragments, where did you get them from?
 What do the code fragments do? Where are they in your code?
